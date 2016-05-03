@@ -3,3 +3,6 @@ Chat log analyzer that attempts to measure the level of affection between the tw
   
 Currently supports kakaotalk only. (subject to change)  
 Only supports 1:1 chat. (**NOT** subject to change: *start a private chat first if you want to date him/her!*)
+
+**DISCLAIMER**  
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY INCIDENCE WHERE THE USER, OVER CONFIDENT BY THE RESULT, ASKS SOMEONE OUT ON A DATE AND GETS REJECTED.
