@@ -7,8 +7,8 @@ from konlpy.tag import Kkma
 nl_parser = Kkma()
 
 
-def parse(filename):
-    chat = lexer.lex(filename)
+def parse(fp):
+    chat = lexer.lex(fp)
     for ln in chat:
         ret = nl_parser.pos(ln[2])
         print(ret)

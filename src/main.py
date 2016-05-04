@@ -1,11 +1,10 @@
-import lexer
+import parser
 
 
 def main():
-    # call lexer
-    chat = lexer.lex("../tests/KakaoTalkChats.txt")
-    for e in chat:
-        print(e)
+    # call parser
+    fp = open("../tests/KakaoTalkChats.txt", 'r', encoding='utf-8')
+    chat = parser.parse(fp)
     # pass the result to tokenizer
     # evaluate the score from tokens
     # print score

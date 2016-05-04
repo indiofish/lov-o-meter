@@ -7,21 +7,15 @@ ME = 1
 OTHER = 0
 
 
-def lex(filename):
-    try:
-        f = open(filename, 'r', encoding='utf-8')
-        header = f.readline()
-        if KAKAO in header:
-            # consume extra line
-            f.readline()
-            ret = __kakao_lexer__(f)
-            f.close()
-            return ret
-        else:
-            raise IOError
-    except IOError:
-        print("No such file or not defined")
-        return []
+def lex(fp):
+    header = fp.readline()
+    if KAKAO in header:
+        # consume extra line
+        fp.readline()
+        ret = __kakao_lexer__(fp)
+        return ret
+    else:
+        raise IOError
 
 
 def __kakao_lexer__(f):
