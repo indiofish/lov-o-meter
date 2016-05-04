@@ -21,12 +21,13 @@ def lex(filename):
             raise IOError
     except IOError:
         print("No such file or not defined")
+        return []
 
 
 def __kakao_lexer__(f):
     pattern = ("(\d+)년 (\d+)월 (\d+)일 " +  # y/m/d
                "(\w+) (\d+):(\d+), " +  # am|pm /h/m
-               "(\w+) : (.*)")  # name/content
+               "(\w+) : (.*)")  # name/contents
     regex = re.compile(pattern)
     result = []
 
@@ -39,13 +40,13 @@ def __kakao_lexer__(f):
             hour = int(match.group(5))
             minute = int(match.group(6))
             user = match.group(7)
-            content = match.group(8)
+            contents = match.group(8)
 
             if match.group(4) == PM:
                 # if not 12:??, add 12
                 hour += 12 * (hour != 12)
             user = int(match.group(7) == "회원님")
             time = datetime.datetime(year, month, day, hour, minute)
-            result.append((time, user, content))
+            result.append((time, user, contents))
 
     return result
