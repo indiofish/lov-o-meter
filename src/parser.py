@@ -9,6 +9,7 @@ nl_parser = Kkma()
 
 def parse(fp):
     chat = lexer.lex(fp)
-    for ln in chat:
-        ret = nl_parser.pos(ln[2])
-        print(ret)
+    ret = []
+    for data in chat:
+        ret.append((data[0], data[1], nl_parser.pos(data[2])))
+    return ret
