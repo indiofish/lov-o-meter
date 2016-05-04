@@ -1,4 +1,4 @@
-# text log parser
+# break text log in to meaningful parts
 import datetime
 import re
 KAKAO = "카카오톡"
@@ -7,14 +7,14 @@ ME = 1
 OTHER = 0
 
 
-def parse(filename):
+def lex(filename):
     try:
         f = open(filename, 'r', encoding='utf-8')
         header = f.readline()
         if KAKAO in header:
             # consume extra line
             f.readline()
-            ret = __kakao_parser__(f)
+            ret = __kakao_lexer__(f)
             f.close()
             return ret
         else:
@@ -23,7 +23,7 @@ def parse(filename):
         print("No such file or not defined")
 
 
-def __kakao_parser__(f):
+def __kakao_lexer__(f):
     pattern = ("(\d+)년 (\d+)월 (\d+)일 " +  # y/m/d
                "(\w+) (\d+):(\d+), " +  # am|pm /h/m
                "(\w+) : (.*)")  # name/content

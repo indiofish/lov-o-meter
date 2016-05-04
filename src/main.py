@@ -2,8 +2,8 @@ import lexer
 
 
 def main():
-    # call parser
-    chat = lexer.parse("../tests/KakaoTalkChats.txt")
+    # call lexer
+    chat = lexer.lex("../tests/KakaoTalkChats.txt")
     for e in chat:
         print(e)
     # pass the result to tokenizer
