@@ -1,10 +1,12 @@
 import parser
+import jpype
 
 
 def main():
     # call parser
     try:
         fp = open("../tests/KakaoTalkChats.txt", 'r', encoding='utf-8')
+        jpype.attachThreadToJVM()
         chat = parser.parse(fp)
         print(chat)
         # pass the result to tokenizer
