@@ -1,7 +1,10 @@
 import parser
-import queue
+import stats
+import analyser
 import progress
 import threading
+import queue
+
 
 def helper(filename, queue):
     # TODO
@@ -11,7 +14,9 @@ def helper(filename, queue):
     # print score
     with open(filename, 'r', encoding='utf-8') as fp:
         chat = parser.parse(fp)
-    queue.put(chat)
+    chatdata = stats.get_stats(chat)
+    ret = analyser.analyse(chatdata)
+    queue.put(ret)
     return
 
 
@@ -20,14 +25,15 @@ def main():
     filename = "../tests/KakaoTalkChats.txt"
     try:
         th = threading.Thread(target=helper, args=(filename, que))
-        proc_bar = threading.Thread(target=progress.show_progress, args=(th,))
         th.start()  # start processing file data
-        proc_bar.start()  # draw process bar for user
-        th.join()
-        result = que.get()  # get result of helper function
-        print(result)
     except IOError:
         print("NO SUCH FILE")
+    proc_bar = threading.Thread(target=progress.show_progress, args=(th,))
+    proc_bar.start()  # draw process bar for user
+    th.join()
+    result = que.get()  # get result of helper function
+    print("\x1b[K", end='\r')
+    print(result)
 
 if __name__ == '__main__':
     main()
