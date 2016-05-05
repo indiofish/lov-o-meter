@@ -1,9 +1,9 @@
 from time import sleep
-from itertools import cycle
-progress = cycle(('ㅡ', '\\', '|', '/',))
 
 
 def show_progress(th):
+    cnt = 0
     while th.is_alive():
-        print("Processing... "+ next(progress), end='\r')
+        print("\x1b[KProcessing" + "." * cnt, end='\r')
+        cnt = (cnt + 1) % 4
         sleep(0.5)
