@@ -9,6 +9,7 @@ nl_parser = Kkma()
 
 
 def parse(fp):
+    # to avoid error when ran as a thread
     jpype.attachThreadToJVM()
     chat = lexer.lex(fp)
     ret = []
