@@ -6,4 +6,4 @@ def show_progress(th):
     while th.is_alive():
         print("\x1b[KProcessing" + "." * cnt, end='\r')
         cnt = (cnt + 1) % 4
-        sleep(0.5)
+        sleep(1.0)
