@@ -23,6 +23,7 @@ def __kakao_lexer__(f):
                "(\w+) (\d+):(\d+), " +  # am|pm /h/m
                "(\w+) : (.*)")  # name/contents
     regex = re.compile(pattern)
+    ret = []
 
     for ln in f:
         match = re.search(regex, ln)
@@ -40,4 +41,5 @@ def __kakao_lexer__(f):
                 hour += 12 * (hour != 12)
             user = int(match.group(7) == "회원님")
             time = datetime.datetime(year, month, day, hour, minute)
-            yield (time, user, contents)
+            ret.append((time, user, contents))
+    return ret
