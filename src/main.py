@@ -33,7 +33,7 @@ def main():
     th.join()
     proc_bar.join()
     result = que.get()  # get result of helper function
-    print("\x1b[K", end='\r')
+    print("\x1b[K", end='\r')  # clear screen before writing results
     print(result)
 
 if __name__ == '__main__':
