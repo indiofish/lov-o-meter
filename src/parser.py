@@ -19,7 +19,7 @@ def tagging(start, end, lines, result):
 
 def parse(fp):
     # to avoid error when ran as a thread
-    jpype.attachThreadToJVM()
+    # jpype.attachThreadToJVM()
     chat = lexer.lex(fp)
     nlines = len(chat)
     ret = [0] * nlines
