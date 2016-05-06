@@ -21,7 +21,6 @@ def tagging(result, que):
 
 def parse(fp):
     chat_len, chat_que = lexer.lex(fp)
-    print(chat_len)
     ret = [0] * chat_len
     pool = [Thread(target=tagging, args=(ret, chat_que))
             for _ in range(THREAD_CNT)]
