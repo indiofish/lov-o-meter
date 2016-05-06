@@ -8,6 +8,15 @@ ME = 1
 OTHER = 0
 
 
+class ChatToken(object):
+    """docstring for ChatToken"""
+    def __init__(self, pos=0, time=None, user=None, contents=None):
+        self.pos = pos
+        self.time = time
+        self.user = user
+        self.contents = contents
+
+
 def lex(fp):
     header = fp.readline()
     if KAKAO in header:
@@ -43,6 +52,7 @@ def __kakao_lexer__(f):
                 hour += 12 * (hour != 12)
             user = int(match.group(7) == "회원님")
             time = datetime.datetime(year, month, day, hour, minute)
-            que.put((idx, time, user, contents))
+            tok = ChatToken(idx, time, user, contents)
+            que.put(tok)
             idx += 1
     return (idx, que)

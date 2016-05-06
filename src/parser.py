@@ -14,14 +14,15 @@ def tagging(result, que):
     # to avoid error when ran as a thread
     jpype.attachThreadToJVM()
     while not que.empty():
-        idx, time, user, contents = que.get()
-        result[idx] = (time, user, nl_parser.pos(contents))
+        tok = que.get()
+        result[tok.pos] = (tok.time, tok.user,
+                           nl_parser.pos(tok.contents))
     return
 
 
 def parse(fp):
     chat_len, chat_que = lexer.lex(fp)
-    ret = [0] * chat_len
+    ret = [None] * chat_len
     pool = [Thread(target=tagging, args=(ret, chat_que))
             for _ in range(THREAD_CNT)]
     for t in pool:
@@ -29,4 +30,5 @@ def parse(fp):
         t.start()
     for t in pool:
         t.join()
+    print(ret)
     return ret
