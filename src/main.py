@@ -32,7 +32,7 @@ def main():
     proc_bar.daemon = True
     proc_bar.start()  # draw process bar for user
     th.join()
-    # proc_bar.join()
+    proc_bar.join()
     result = que.get()  # get result of helper function
     print("\x1b[K", end='\r')  # clear screen before writing results
     print(result)
