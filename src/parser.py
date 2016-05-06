@@ -5,6 +5,7 @@ import jpype
 from konlpy.tag import Kkma
 from threading import Thread
 # from konlpy.tag import Mecab
+THREAD_CNT = 4
 
 nl_parser = Kkma()
 
@@ -22,10 +23,10 @@ def parse(fp):
     chat = lexer.lex(fp)
     nlines = len(chat)
     ret = [0] * nlines
-    partition = nlines // 4
+    partition = nlines // THREAD_CNT
     pool = [Thread(target=tagging,
                    args=(partition * x, partition * (x+1), chat, ret))
-            for x in range(4)]
+            for x in range(THREAD_CNT)]
     for t in pool:
         t.daemon = True
         t.start()
