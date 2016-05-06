@@ -28,6 +28,10 @@ def parse(fp):
     t2 = Thread(target=tagging, args=(nlines//4+1, nlines//2, chat, ret))
     t3 = Thread(target=tagging, args=(nlines//2+1, 3*(nlines//4), chat, ret))
     t4 = Thread(target=tagging, args=(3*(nlines//4)+1, nlines, chat, ret))
+    t1.daemon = True
+    t2.daemon = True
+    t3.daemon = True
+    t4.daemon = True
     t1.start()
     t2.start()
     t3.start()
