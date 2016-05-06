@@ -25,10 +25,12 @@ def main():
     filename = "../tests/KakaoTalkChats.txt"
     try:
         th = threading.Thread(target=helper, args=(filename, que))
+        th.daemon = True
         th.start()  # start processing file data
     except IOError:
         print("NO SUCH FILE")
     proc_bar = threading.Thread(target=progress.show_progress, args=(th,))
+    proc_bar.daemon = True
     proc_bar.start()  # draw process bar for user
     th.join()
     proc_bar.join()
