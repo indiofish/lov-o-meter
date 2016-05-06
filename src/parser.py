@@ -13,7 +13,7 @@ def tagging(start, end, lines, result):
     jpype.attachThreadToJVM()
     for i in range(start, end):
         d = lines[i]
-        result[i] = ((d[0], d[1], nl_parser.pos(d[2])))
+        result[i] = (d[0], d[1], nl_parser.pos(d[2]))
     return
 
 
@@ -24,12 +24,13 @@ def parse(fp):
     nlines = len(chat)
     ret = [0] * nlines
     partition = nlines // 4
-    pool = (Thread(target=tagging,
-                   args=(partition * x, partition * (x+1), chat, ret[x]))
-            for x in range(4))
+    pool = [Thread(target=tagging,
+                   args=(partition * x, partition * (x+1), chat, ret))
+            for x in range(4)]
     for t in pool:
         t.daemon = True
         t.start()
     for t in pool:
         t.join()
+    print(ret)
     return ret
