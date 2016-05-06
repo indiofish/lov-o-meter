@@ -1,6 +1,7 @@
 # break text log in to meaningful parts
 import datetime
 import re
+import queue
 KAKAO = "카카오톡"
 PM = "오후"
 ME = 1
@@ -23,7 +24,8 @@ def __kakao_lexer__(f):
                "(\w+) (\d+):(\d+), " +  # am|pm /h/m
                "(\w+) : (.*)")  # name/contents
     regex = re.compile(pattern)
-    ret = []
+    que = queue.Queue()
+    idx = 0
 
     for ln in f:
         match = re.search(regex, ln)
@@ -41,5 +43,6 @@ def __kakao_lexer__(f):
                 hour += 12 * (hour != 12)
             user = int(match.group(7) == "회원님")
             time = datetime.datetime(year, month, day, hour, minute)
-            ret.append((time, user, contents))
-    return ret
+            que.put((idx, time, user, contents))
+            idx += 1
+    return (idx, que)

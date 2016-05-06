@@ -10,23 +10,21 @@ THREAD_CNT = 4
 nl_parser = Kkma()
 
 
-def tagging(start, end, lines, result):
+def tagging(result, que):
     # to avoid error when ran as a thread
     jpype.attachThreadToJVM()
-    for i in range(start, end):
-        d = lines[i]
-        result[i] = (d[0], d[1], nl_parser.pos(d[2]))
+    while not que.empty():
+        idx, time, user, contents = que.get()
+        result[idx] = (time, user, nl_parser.pos(contents))
     return
 
 
 def parse(fp):
-    chat = lexer.lex(fp)
-    nlines = len(chat)
-    ret = [0] * nlines
-    partition = nlines // THREAD_CNT
-    pool = [Thread(target=tagging,
-                   args=(partition * x, partition * (x+1), chat, ret))
-            for x in range(THREAD_CNT)]
+    chat_len, chat_que = lexer.lex(fp)
+    print(chat_len)
+    ret = [0] * chat_len
+    pool = [Thread(target=tagging, args=(ret, chat_que))
+            for _ in range(THREAD_CNT)]
     for t in pool:
         t.daemon = True
         t.start()
