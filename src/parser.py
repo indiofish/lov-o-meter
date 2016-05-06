@@ -32,5 +32,4 @@ def parse(fp):
         t.start()
     for t in pool:
         t.join()
-    print(ret)
     return ret
