@@ -2,19 +2,14 @@
 import datetime
 import re
 import queue
+from collections import namedtuple
+
 KAKAO = "카카오톡"
 PM = "오후"
 ME = 1
 OTHER = 0
-
-
-class ChatToken(object):
-    """docstring for ChatToken"""
-    def __init__(self, pos=0, time=None, user=None, contents=None):
-        self.pos = pos
-        self.time = time
-        self.user = user
-        self.contents = contents
+ChatToken = namedtuple('ChatToken',
+                       ['pos', 'time', 'user', 'contents'])
 
 
 def lex(fp):
