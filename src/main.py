@@ -22,6 +22,7 @@ def main():
     except IOError:
         bar.done = True
         print("NO SUCH FILE")
+        return
     bar.done = True
     print(result)
 
