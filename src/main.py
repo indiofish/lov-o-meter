@@ -17,15 +17,15 @@ def helper(filename):
 
 
 def main():
-    filename = "../tests/KakaoTalkChats1.txt"
+    filename = "../tests/KakaoTalkChats.txt"
     bar = ProgressBar()
     bar.show_progress()
     try:
         result = helper(filename)
     except IOError:
-        bar.finished = True
+        bar.done = True
         print("NO SUCH FILE")
-    bar.finished = True
+    bar.done = True
     print(result)
 
 if __name__ == '__main__':
