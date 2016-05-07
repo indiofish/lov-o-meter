@@ -1,12 +1,10 @@
 import parser
 import stats
 import analyser
-import progress
-from threading import Thread
-import queue
+from progress import ProgressBar
 
 
-def helper(filename, queue):
+def helper(filename):
     # TODO
     # call parser # pass the result to tokenizer
     # evaluate the score from tokens
@@ -15,26 +13,19 @@ def helper(filename, queue):
         chat = parser.parse(fp)
     chatdata = stats.get_stats(chat)
     ret = analyser.analyse(chatdata)
-    queue.put(ret)
-    return
+    return ret
 
 
 def main():
-    que = queue.Queue()
     filename = "../tests/KakaoTalkChats1.txt"
+    bar = ProgressBar()
+    bar.show_progress()
     try:
-        th = Thread(target=helper, args=(filename, que))
-        th.daemon = True
-        th.start()  # start processing file data
+        result = helper(filename)
     except IOError:
+        bar.finished = True
         print("NO SUCH FILE")
-    proc_bar = Thread(target=progress.show_progress, args=(th,))
-    proc_bar.daemon = True
-    proc_bar.start()  # draw process bar for user
-    th.join()
-    proc_bar.join()
-    result = que.get()  # get result of helper function
-    print("\x1b[K", end='\r')  # clear screen before writing results
+    bar.finished = True
     print(result)
 
 if __name__ == '__main__':
