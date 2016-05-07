@@ -11,6 +11,7 @@ nl_parser = Kkma()
 
 
 def tagging(result, que):
+    """get string from a queue and tags it"""
     # to avoid error when ran as a thread
     jpype.attachThreadToJVM()
     while not que.empty():
@@ -24,6 +25,7 @@ def tagging(result, que):
 
 
 def parse(fp):
+    """create threads to tag chatlog using a thread-safe queue"""
     chat_len, chat_que = lexer.lex(fp)
     ret = [None] * chat_len
     pool = [Thread(target=tagging, args=(ret, chat_que))

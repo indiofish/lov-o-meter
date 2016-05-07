@@ -5,10 +5,7 @@ from progress import ProgressBar
 
 
 def helper(filename):
-    # TODO
-    # call parser # pass the result to tokenizer
-    # evaluate the score from tokens
-    # print score
+    """parse file, get data, and evaluate rank"""
     with open(filename, 'r', encoding='utf-8') as fp:
         chat = parser.parse(fp)
     chatdata = stats.get_stats(chat)

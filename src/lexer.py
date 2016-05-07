@@ -8,11 +8,10 @@ KAKAO = "카카오톡"
 PM = "오후"
 ME = 1
 OTHER = 0
-ChatToken = namedtuple('ChatToken',
-                       ['pos', 'time', 'user', 'contents'])
 
 
 def lex(fp):
+    """identify type of chat and call appropriate lexer"""
     header = fp.readline()
     if KAKAO in header:
         # consume extra line
@@ -24,6 +23,9 @@ def lex(fp):
 
 
 def __kakao_lexer__(f):
+    """lexer for kakaotalk"""
+    ChatToken = namedtuple('ChatToken',
+                           ['pos', 'time', 'user', 'contents'])
     pattern = ("(\d+)년 (\d+)월 (\d+)일 " +  # y/m/d
                "(\w+) (\d+):(\d+), " +  # am|pm /h/m
                "(\w+) : (.*)")  # name/contents
