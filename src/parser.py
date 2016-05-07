@@ -15,8 +15,11 @@ def tagging(result, que):
     jpype.attachThreadToJVM()
     while not que.empty():
         tok = que.get()
-        result[tok.pos] = (tok.time, tok.user,
-                           nl_parser.pos(tok.contents))
+        try:
+            result[tok.pos] = (tok.time, tok.user,
+                               nl_parser.pos(tok.contents))
+        except AttributeError:
+            pass
     return
 
 
@@ -30,5 +33,5 @@ def parse(fp):
         t.start()
     for t in pool:
         t.join()
-    print(ret)
+    # print(ret)
     return ret
