@@ -2,7 +2,7 @@
 import datetime
 import re
 import queue
-from collections import namedtuple
+from collections import namedtuple, deque
 
 KAKAO = "카카오톡"
 PM = "오후"
@@ -30,7 +30,7 @@ def __kakao_lexer__(f):
                "(\w+) (\d+):(\d+), " +  # am|pm /h/m
                "(\w+) : (.*)")  # name/contents
     regex = re.compile(pattern)
-    que = queue.Queue()
+    que = deque()
     idx = 0
 
     for ln in f:
@@ -50,6 +50,6 @@ def __kakao_lexer__(f):
             user = int(match.group(7) == "회원님")
             time = datetime.datetime(year, month, day, hour, minute)
             tok = ChatToken(idx, time, user, contents)
-            que.put(tok)
+            que.append(tok)
             idx += 1
     return (idx, que)

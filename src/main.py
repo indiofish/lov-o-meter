@@ -14,7 +14,7 @@ def helper(filename):
 
 
 def main():
-    filename = "../tests/KakaoTalkChats.txt"
+    filename = "../tests/KakaoTalkChats1.txt"
     bar = ProgressBar()
     bar.show_progress()
     try:
