@@ -12,7 +12,6 @@ class ChatParser(object):
     def __init__(self):
         self.tagger = Kkma()
         self.thread_cnt = 4
-        self.progress = 0  # 0 ~ 100
 
     def tagging(self, result, que):
         """get string from a queue and tags it"""
@@ -37,8 +36,12 @@ class ChatParser(object):
         for t in pool:
             t.daemon = True
             t.start()
+        while not chat_que.empty():
+            progress = int(((chat_len-chat_que.qsize()) / chat_len)*100)
+            bar.progress = progress
         for t in pool:
             t.join()
+
         bar.done = True
         # print(ret)
         return ret
