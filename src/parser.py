@@ -27,10 +27,11 @@ class ChatParser(object):
                 pass
         return
 
-    def parse(self, fp):
+    def parse(self, fp, bar):
         """create threads to tag chatlog using a thread-safe queue"""
         chat_len, chat_que = lexer.lex(fp)
         ret = [None] * chat_len
+        bar.show_progress()
         pool = [Thread(target=self.tagging, args=(ret, chat_que))
                 for _ in range(self.thread_cnt)]
         for t in pool:
@@ -38,5 +39,6 @@ class ChatParser(object):
             t.start()
         for t in pool:
             t.join()
+        bar.done = True
         # print(ret)
         return ret
