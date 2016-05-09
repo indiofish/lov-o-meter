@@ -4,10 +4,11 @@ from threading import Thread
 
 class ProgressBar(object):
     """progressbar ui drawer"""
-    def __init__(self, msg="Processing"):
+    def __init__(self, msg="Processing", full=100):
         self.done = False
         self.msg = msg
         self.progress = 0
+        self.full = full
 
     @property
     def done(self):
@@ -19,16 +20,6 @@ class ProgressBar(object):
             # clear screen
             print("\x1b[K", end='\r')
         self.__done = done
-
-    @property
-    def progress(self):
-        return self.__progress
-
-    @progress.setter
-    def progress(self, progress):
-        if not 0 <= progress <= 100:
-            progress = 0
-        self.__progress = progress
 
     def show_progress(self):
         """create a seperate thread that draws a progress bar"""
@@ -46,5 +37,6 @@ class ProgressBar(object):
 
     def __show_progress_bars__(self):
         while not self.done:
-            print("\x1b[K{}".format(self.progress), end='\r')
+            progress = int((self.progress / self.full) * 100)
+            print("\x1b[K{}".format(progress), end='\r')
             sleep(1.0)
