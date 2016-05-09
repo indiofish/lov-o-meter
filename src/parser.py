@@ -22,7 +22,7 @@ class ChatParser(object):
                 tok = que.pop()
                 result[tok.pos] = (tok.time, tok.user,
                                    self.tagger.pos(tok.contents))
-                bar.progress = len(que)
+                bar.progress += 1
             except AttributeError:
                 pass
             except IndexError:
@@ -34,8 +34,7 @@ class ChatParser(object):
         chat_que = lexer.lex(fp)
         chat_len = len(chat_que)
         ret = [None] * chat_len
-        bar.max = chat_len
-        bar.progress = chat_len
+        bar.full = chat_len
         bar.show_progress()
         pool = [Thread(target=self.tagging, args=(ret, chat_que, bar))
                 for _ in range(self.thread_cnt)]
@@ -44,7 +43,6 @@ class ChatParser(object):
             t.start()
         for t in pool:
             t.join()
-
         bar.done = True
         # print(ret)
         return ret
