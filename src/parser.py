@@ -17,13 +17,15 @@ class ChatParser(object):
         """get string from a queue and tags it"""
         # to avoid error when ran as a thread
         jpype.attachThreadToJVM()
-        while not que.empty():
-            tok = que.get()
+        while 1:
             try:
+                tok = que.pop()
                 result[tok.pos] = (tok.time, tok.user,
                                    self.tagger.pos(tok.contents))
             except AttributeError:
                 pass
+            except IndexError:
+                break
         return
 
     def parse(self, fp, bar):
@@ -36,9 +38,9 @@ class ChatParser(object):
         for t in pool:
             t.daemon = True
             t.start()
-        while not chat_que.empty():
-            progress = int(((chat_len-chat_que.qsize()) / chat_len)*100)
-            bar.progress = progress
+        # while len(chat_que):
+            # progress = int(((chat_len-len(chat_que)) / chat_len)*100)
+            # bar.progress = progress
         for t in pool:
             t.join()
 
