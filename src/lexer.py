@@ -51,4 +51,4 @@ def __kakao_lexer__(f):
             tok = ChatToken(idx, time, user, contents)
             que.append(tok)
             idx += 1
-    return (idx, que)
+    return que
