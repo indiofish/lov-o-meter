@@ -1,6 +1,9 @@
 from time import sleep
 from threading import Thread
 
+HIDE_CURSOR = '\x1b[?25l'
+SHOW_CURSOR = '\x1b[?25h'
+CLEAR_LINE = '\x1b[K'
 
 class ProgressBar(object):
     """progressbar ui drawer"""
@@ -18,7 +21,7 @@ class ProgressBar(object):
     def done(self, done):
         if done:
             # clear screen
-            print("\x1b[K", end='\r')
+            print(SHOW_CURSOR+CLEAR_LINE, end='\r')
         self.__done = done
 
     def show_progress(self):
@@ -38,5 +41,5 @@ class ProgressBar(object):
     def __show_progress_bars__(self):
         while not self.done:
             progress = int((self.progress / self.full) * 100)
-            print("\x1b[K{}".format(progress), end='\r')
-            sleep(1.0)
+            print(HIDE_CURSOR+CLEAR_LINE+str(progress), end='\r')
+            sleep(0.5)
