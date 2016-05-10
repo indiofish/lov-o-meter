@@ -22,6 +22,8 @@ class ChatParser(object):
                 tok = que.pop()
                 result[tok.pos] = (tok.time, tok.user,
                                    self.tagger.pos(tok.contents))
+                # not very accurate due to threading,
+                # but just enough to show proc bar
                 bar.progress += 1
             except AttributeError:
                 pass
