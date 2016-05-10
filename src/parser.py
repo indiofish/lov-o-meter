@@ -1,9 +1,9 @@
 import lexer
 import jpype
+from threading import Thread
 # Kkma is slower, yet more verbose than Mecab.
 # If speed becomes the issue, consider changing to Mecab.
 from konlpy.tag import Kkma
-from threading import Thread
 # from konlpy.tag import Mecab
 
 
