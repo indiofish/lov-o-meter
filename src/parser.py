@@ -9,9 +9,9 @@ from konlpy.tag import Kkma
 
 class ChatParser(object):
     """docstring for ChatParser"""
-    def __init__(self):
-        self.tagger = Kkma()
-        self.thread_cnt = 4
+    def __init__(self, tagger=Kkma, thread_cnt=4):
+        self.tagger = tagger()
+        self.thread_cnt = thread_cnt
 
     def tagging(self, result, que, bar):
         """get string from a queue and tags it"""
@@ -19,6 +19,7 @@ class ChatParser(object):
         jpype.attachThreadToJVM()
         while 1:
             try:
+                # pop operation is atomic
                 tok = que.pop()
                 result[tok.pos] = (tok.time, tok.user,
                                    self.tagger.pos(tok.contents))
@@ -32,7 +33,7 @@ class ChatParser(object):
         return
 
     def parse(self, fp, bar):
-        """create threads to tag chatlog using a thread-safe queue"""
+        """create threads to tag chatlog"""
         chat_que = lexer.lex(fp)
         ret = [None] * len(chat_que)
         bar.full = len(chat_que)
