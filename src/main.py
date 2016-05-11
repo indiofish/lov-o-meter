@@ -9,8 +9,8 @@ def helper(filename, bar):
     chat_parser = parser.ChatParser()
     with open(filename, 'r', encoding='utf-8') as fp:
         chat = chat_parser.parse(fp, bar)
-    chatdata = stats.get_stats(chat)
-    ret = analyser.analyse(chatdata)
+    chatdata = analyser.analyse(chat)
+    ret = stats.get_stats(chatdata)
     return ret
 
 
