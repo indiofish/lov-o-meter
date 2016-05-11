@@ -4,7 +4,11 @@ from threading import Thread
 # Kkma is slower, yet more verbose than Mecab.
 # If speed becomes the issue, consider changing to Mecab.
 from konlpy.tag import Kkma
+from collections import namedtuple
 # from konlpy.tag import Mecab
+
+ChatData = namedtuple('ChatData',
+                     ['time', 'user', 'contents'])
 
 
 class ChatParser(object):
@@ -21,8 +25,8 @@ class ChatParser(object):
             try:
                 # pop operation is atomic
                 tok = que.pop()
-                result[tok.pos] = (tok.time, tok.user,
-                                   self.tagger.pos(tok.contents))
+                result[tok.pos] = ChatData(
+                    tok.time, tok.user, self.tagger.pos(tok.contents))
                 # not very accurate due to threading,
                 # but just enough to show proc bar
                 bar.progress += 1
