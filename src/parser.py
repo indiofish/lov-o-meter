@@ -37,7 +37,7 @@ class ChatParser(object):
         chat_que = lexer.lex(fp)
         ret = [None] * len(chat_que)
         bar.full = len(chat_que)
-        bar.show_progress()
+        bar.start()
         pool = [Thread(target=self.tagging, args=(ret, chat_que, bar))
                 for _ in range(self.thread_cnt)]
         for t in pool:

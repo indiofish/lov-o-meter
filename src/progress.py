@@ -27,7 +27,7 @@ class ProgressBar(object):
             # clear screen
             print(SHOW_CURSOR+CLEAR_LINE, end='\r')
 
-    def show_progress(self):
+    def start(self):
         """create a seperate thread that draws a progress bar"""
         self.bar = Thread(target=self.__show_progress_bars__)
         self.bar.daemon = True
