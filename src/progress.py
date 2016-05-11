@@ -1,5 +1,7 @@
 from time import sleep
 from threading import Thread
+import signal
+from sys import exit
 
 HIDE_CURSOR = '\x1b[?25l'
 SHOW_CURSOR = '\x1b[?25h'
@@ -29,6 +31,7 @@ class ProgressBar(object):
 
     def start(self):
         """create a seperate thread that draws a progress bar"""
+        signal.signal(signal.SIGINT, self.__sigint_handler__)
         self.bar = Thread(target=self.__show_progress_bars__)
         self.bar.daemon = True
         self.bar.start()
@@ -52,3 +55,7 @@ class ProgressBar(object):
                    "]")
             print(HIDE_CURSOR+CLEAR_LINE+self.msg, bar, end='\r')
             sleep(0.5)
+
+    def __sigint_handler__(self, signal, frame):
+        self.done = True
+        exit(0)
