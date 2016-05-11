@@ -1,5 +1,3 @@
-# with the parsed data, gather information
-def get_stats(chat):
+def get_stats(data):
     # dummy value
-    tmp = ChatData()
-    return tmp
+    return 42

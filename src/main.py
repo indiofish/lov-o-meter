@@ -1,12 +1,13 @@
 import parser
 import stats
-import analyser
+from analyser import Analyser
 from progress import ProgressBar
 
 
 def helper(filename, bar):
     """parse file, get data, and evaluate rank"""
     chat_parser = parser.ChatParser()
+    analyser = Analyser()
     with open(filename, 'r', encoding='utf-8') as fp:
         chat = chat_parser.parse(fp, bar)
     chatdata = analyser.analyse(chat)
