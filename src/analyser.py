@@ -11,10 +11,11 @@ class Analyser(object):
 
     def analyse(self, chat):
         # calculate interval between chats
-        interval = timedelta(seconds=0)
+        tmp_time = timedelta(seconds=0)
         for i in range(1, len(chat)):
-            interval += chat[i].time - chat[i-1].time
-        print(interval)
+            tmp_time += chat[i].time - chat[i-1].time
+        avg_interval = tmp_time.total_seconds() / len(chat)
+        print(avg_interval)
         ret = ChatData(interval=3)
 
         return ret
