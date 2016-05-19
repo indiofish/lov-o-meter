@@ -22,7 +22,7 @@ class ChatParser(object):
                 tok = que.pop()
                 result[tok.pos] = (tok.time, tok.user,
                                    self.tagger.pos(tok.contents))
-                bar.progress += 1
+                bar.update()
             except AttributeError:
                 pass
             except IndexError:

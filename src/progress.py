@@ -1,5 +1,6 @@
 from time import sleep
 from threading import Thread
+from threading import Lock
 
 HIDE_CURSOR = '\x1b[?25l'
 SHOW_CURSOR = '\x1b[?25h'
@@ -14,6 +15,7 @@ class ProgressBar(object):
         self.progress = 0
         self.full = full
         self.bar = None
+        self.lock = Lock()
 
     @property
     def done(self):
@@ -32,6 +34,10 @@ class ProgressBar(object):
         self.bar = Thread(target=self.__show_progress_bars__)
         self.bar.daemon = True
         self.bar.start()
+
+    def update(self):
+        with self.lock:
+            self.progress += 1
 
     def __show_progress_dots__(self):
         """draws 3 dots until done"""
