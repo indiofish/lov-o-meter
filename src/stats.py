@@ -1,12 +1,6 @@
-# with the parsed data, gather information
-class ChatData(object):
-    """docstring for ClassName"""
-    def __init__(self, positive_cnt=0, negative_cnt=0):
-        self.positive_cnt = 3
-        self.negative_cnt = 3
-
-
-def get_stats(chat):
+# with the given statistics of chat,
+# read from json file to get precomputed
+# mean and variance to calculate stuff
+def get_stats(data):
     # dummy value
-    tmp = ChatData()
-    return tmp
+    return 42
