@@ -11,13 +11,17 @@ CLEAR_LINE = '\x1b[K'
 
 class ProgressBar(object):
     """progressbar ui drawer"""
-    def __init__(self, msg="Processing", full=100):
+    def __init__(self, msg="Processing", full=100, multi=True):
         self.done = False
         self.msg = msg
         self.progress = 0
         self.full = full
         self.bar = None
-        self.lock = Lock()
+        if multi:
+            self.lock = Lock()
+            self.update = self.__update__multi__
+        else:
+            self.update = self.__update__single__
 
     @property
     def done(self):
@@ -38,9 +42,12 @@ class ProgressBar(object):
         self.bar.daemon = True
         self.bar.start()
 
-    def update(self):
+    def __update__multi__(self):
         with self.lock:
             self.progress += 1
+
+    def __update__single__(self):
+        self.progress += 1
 
     def __show_progress_dots__(self):
         """draws 3 dots until done"""
