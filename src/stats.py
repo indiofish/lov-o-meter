@@ -3,4 +3,4 @@
 # mean and variance to calculate stuff
 def get_stats(data):
     # dummy value
-    return 42
+    return data.interval

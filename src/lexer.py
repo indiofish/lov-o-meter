@@ -1,5 +1,4 @@
 # break text log in to meaningful parts
-import datetime
 import re
 from collections import namedtuple, deque
 
@@ -35,20 +34,20 @@ def __kakao_lexer__(f):
     for ln in f:
         match = re.search(regex, ln)
         if match:
-            year = int(match.group(1))
-            month = int(match.group(2))
-            day = int(match.group(3))
+            year = match.group(1)
+            month = match.group(2)
+            day = match.group(3)
             hour = int(match.group(5))
-            minute = int(match.group(6))
-            user = match.group(7)
+            minute = match.group(6)
+            user = int(match.group(7) == "회원님")
             contents = match.group(8)
 
             if match.group(4) == PM:
                 # if not 12:??, add 12
                 hour += 12 * (hour != 12)
-            user = int(match.group(7) == "회원님")
-            time = datetime.datetime(year, month, day, hour, minute)
+
+            time = year+'-'+month+'-'+day+' '+str(hour)+':'+minute
             tok = ChatToken(idx, time, user, contents)
-            que.append(tok)
             idx += 1
+            que.append(tok)
     return que

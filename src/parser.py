@@ -1,5 +1,6 @@
 import lexer
 import jpype
+from datetime import datetime
 from threading import Thread
 # Kkma is slower, yet more verbose than Mecab.
 # If speed becomes the issue, consider changing to Mecab.
@@ -25,12 +26,15 @@ class ChatParser(object):
             try:
                 # pop operation is atomic
                 tok = que.pop()
+                time = datetime.strptime(tok.time,
+                                         "%Y-%m-%d %H:%M")
                 result[tok.pos] = ChatData(
-                    tok.time, tok.user, self.tagger.pos(tok.contents))
+                    time, tok.user, self.tagger.pos(tok.contents))
                 bar.update()
             except AttributeError:
                 pass
             except IndexError:
+                # when competing threads try to pop()
                 break
         return
 
