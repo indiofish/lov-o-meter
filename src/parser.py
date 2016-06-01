@@ -9,7 +9,10 @@ from collections import namedtuple
 # from konlpy.tag import Mecab
 
 ChatData = namedtuple('ChatData',
-                      ['time', 'user', 'contents'])
+                      ['time',
+                       'user',
+                       'raw',
+                       'contents'])
 
 
 class ChatParser(object):
@@ -29,7 +32,9 @@ class ChatParser(object):
                 time = datetime.strptime(tok.time,
                                          "%Y-%m-%d %H:%M")
                 result[tok.pos] = ChatData(
-                    time, tok.user, self.tagger.pos(tok.contents))
+                    time, tok.user,
+                    tok.contents,
+                    self.tagger.pos(tok.contents, flatten=False))
                 bar.update()
             except AttributeError:
                 pass
