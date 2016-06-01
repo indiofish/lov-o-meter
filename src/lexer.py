@@ -34,9 +34,7 @@ def __kakao_lexer__(f):
     for ln in f:
         match = re.search(regex, ln)
         if match:
-            year = match.group(1)
-            month = match.group(2)
-            day = match.group(3)
+            dates = '-'.join(match.groups()[:3])
             hour = int(match.group(5))
             minute = match.group(6)
             user = int(match.group(7) == "회원님")
@@ -46,7 +44,7 @@ def __kakao_lexer__(f):
                 # if not 12:??, add 12
                 hour += 12 * (hour != 12)
 
-            time = year+'-'+month+'-'+day+' '+str(hour)+':'+minute
+            time = dates + ' ' + str(hour) + ':' + minute
             tok = ChatToken(idx, time, user, contents)
             idx += 1
             que.append(tok)
