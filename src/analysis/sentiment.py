@@ -52,7 +52,7 @@ class Sentiment(object):
                     weight -= boost
             words[i] = (p[0], weight)
             if p[0] in self.boost_words:
-                boost = self.boost_words[p[0]]
+                boost += self.boost_words[p[0]]
             else:
                 boost = 0
 
@@ -108,8 +108,7 @@ class Sentiment(object):
 
 def main():
     sent = Sentiment()
-    print(sent.senti([('싫',''), ('지',''), ('는',''), ('않', 'VXV'),
-                      ('지','')]))
+    print(sent.senti([('미치',''), ('존나',''),('좋','')]))
 
 if __name__ == '__main__':
     main()
