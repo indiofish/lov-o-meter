@@ -12,15 +12,13 @@ ChatData = namedtuple('ChatData',
                       ['time',
                        'user',
                        'raw',
-                       'contents',
-                       'contents1'])
+                       'contents'])
 
 
 class ChatParser(object):
     """docstring for ChatParser"""
-    def __init__(self, tagger=Mecab, thread_cnt=4):
-        self.tagger1 = Kkma()
-        self.tagger2 = tagger()
+    def __init__(self, tagger=Kkma, thread_cnt=4):
+        self.tagger = tagger()
         self.thread_cnt = thread_cnt
 
     def tagging(self, result, que, bar):
@@ -36,8 +34,7 @@ class ChatParser(object):
                 result[tok.pos] = ChatData(
                     time, tok.user,
                     tok.contents,
-                    self.tagger1.pos(tok.contents),
-                    self.tagger2.pos(tok.contents))
+                    self.tagger.pos(tok.contents))
                 print(result[tok.pos])
                 bar.update()
             except AttributeError as e:
