@@ -1,26 +1,26 @@
 from collections import namedtuple, Counter
 from datetime import timedelta
-import json
+from analysis import sentiment
 ChatData = namedtuple('ChatData',
-                      ['interval', 'avg_chats'])
-POSITIVE_WORDS = "../data/positive.json"
-NEGATIVE_WORDS = "../data/negative.json"
+                      ['interval',
+                       'avg_chats',
+                       'sentiments'])
 
 
 class Analyser(object):
     """with the parsed data, gather information"""
     def __init__(self):
         super(Analyser, self).__init__()
-        self.positive = None
-        self.negative = None
+        self.senti = sentiment.Sentiment()
         # self.__get_words__()
 
     def analyse(self, chat):
         interval = self.__interval__(chat)
         avg_chat = self.__chat_per_day__(chat)
-        # self.__sentiment__(chat)
+        senti = self.__sentiment__(chat)
         ret = ChatData(interval=interval,
-                       avg_chats=avg_chat)
+                       avg_chats=avg_chat,
+                       sentiments=senti)
         return ret
 
     # calculate interval between chats
@@ -38,8 +38,10 @@ class Analyser(object):
             cnt[c.time.date()] += 1
         return sum(cnt.values()) // len(cnt)
 
-    def __get_words__(self):
-        with open(POSITIVE_WORDS) as fp:
-            self.positive = set(json.load(fp))
-        with open(NEGATIVE_WORDS) as fp:
-            self.negative = set(json.load(fp))
+    def __sentiment__(self, chat):
+        ret = [0, 0]
+        for c in chat:
+            p = self.senti.analyse(c.contents)
+            ret[0] += p[0]
+            ret[1] += p[1]
+        return ret
