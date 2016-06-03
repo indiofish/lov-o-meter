@@ -31,8 +31,8 @@ class Sentiment(object):
     def __weight_default__(self, words):
         l = []
         for w in words:
-            # use the standard representation (two characters)
-            # of emojis
+            # use the standard representation
+            # of emojis (two characters)
             if w[0] in EMOJIS:
                 w = w[0] * 2
             if w in self.senti_words:
@@ -48,13 +48,13 @@ class Sentiment(object):
             if boost:
                 if weight > 0:
                     weight += boost
+                    boost = 0
                 elif weight < 0:
                     weight -= boost
+                    boost = 0
             words[i] = (p[0], weight)
             if p[0] in self.boost_words:
                 boost += self.boost_words[p[0]]
-            else:
-                boost = 0
 
     def __weight__negate__(self, words):
         neg = 0
@@ -108,7 +108,7 @@ class Sentiment(object):
 
 def main():
     sent = Sentiment()
-    print(sent.senti([('미치',''), ('존나',''),('좋','')]))
+    print(sent.senti([('존',''),('좋','')]))
 
 if __name__ == '__main__':
     main()
