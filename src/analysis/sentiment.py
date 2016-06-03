@@ -4,6 +4,7 @@ NEGATIVE_WORDS = "../../data/negative.json"
 SENTI_WORDS = "../../data/sentiment.json"
 BOOST_WORDS = "../../data/boost.json"
 NEG_WORDS = "../../data/neg.json"
+EMOJIS = ['ㅋ', 'ㅡ', 'ㅠ', 'ㅎ', '^']
 
 
 class Sentiment(object):
@@ -30,6 +31,10 @@ class Sentiment(object):
     def __weight_default__(self, words):
         l = []
         for w in words:
+            # use the standard representation (two characters)
+            # of emojis
+            if w[0] in EMOJIS:
+                w = w[0] * 2
             if w in self.senti_words:
                 l.append((w, self.senti_words[w]))
             else:
