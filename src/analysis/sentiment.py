@@ -1,9 +1,9 @@
 import json
-POSITIVE_WORDS = "../../data/positive.json"
-NEGATIVE_WORDS = "../../data/negative.json"
-SENTI_WORDS = "../../data/sentiment.json"
-BOOST_WORDS = "../../data/boost.json"
-NEG_WORDS = "../../data/neg.json"
+POSITIVE_WORDS = "../data/positive.json"
+NEGATIVE_WORDS = "../data/negative.json"
+SENTI_WORDS = "../data/sentiment.json"
+BOOST_WORDS = "../data/boost.json"
+NEG_WORDS = "../data/neg.json"
 EMOJIS = ['ㅋ', 'ㅡ', 'ㅠ', 'ㅎ', '^']
 
 
@@ -61,7 +61,6 @@ class Sentiment(object):
         for i, p in enumerate(words):
             weight = p[1]
             if neg:
-                print(p)
                 if weight > 0 and weight % 2 == 1:
                     weight = (weight + 1) * -0.5
                 elif weight > 0 and weight % 2 == 0:
@@ -93,7 +92,7 @@ class Sentiment(object):
 
         return (pos, neg)
 
-    def senti(self, sentence):
+    def analyse(self, sentence):
         words = self.__parse_input__(sentence)
 
         default = self.__weight_default__(words)
@@ -107,8 +106,9 @@ class Sentiment(object):
 
 
 def main():
+    """minimum working example"""
     sent = Sentiment()
-    print(sent.senti([('존',''),('좋','')]))
+    print(sent.analyse([('존',''),('좋','')]))
 
 if __name__ == '__main__':
     main()
