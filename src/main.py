@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import parser
 import stats
 from analysis import analyser
@@ -16,7 +17,7 @@ def helper(filename, bar):
 
 
 def main():
-    filename = "../tests/KakaoTalkChats.txt"
+    filename = "../tests/KakaoTalkChats1.txt"
     bar = ProgressBar()
     try:
         result = helper(filename, bar)
