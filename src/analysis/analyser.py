@@ -13,12 +13,12 @@ class Analyser(object):
         super(Analyser, self).__init__()
         self.positive = None
         self.negative = None
-        self.__get_words__()
+        # self.__get_words__()
 
     def analyse(self, chat):
         interval = self.__interval__(chat)
         avg_chat = self.__chat_per_day__(chat)
-        self.__sentiment__(chat)
+        # self.__sentiment__(chat)
         ret = ChatData(interval=interval,
                        avg_chats=avg_chat)
         return ret
@@ -37,10 +37,6 @@ class Analyser(object):
         for c in chat:
             cnt[c.time.date()] += 1
         return sum(cnt.values()) // len(cnt)
-
-    def __sentiment__(self, chat):
-        for c in chat:
-            print(c.contents)
 
     def __get_words__(self):
         with open(POSITIVE_WORDS) as fp:

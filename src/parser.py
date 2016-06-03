@@ -6,19 +6,21 @@ from threading import Thread
 # If speed becomes the issue, consider changing to Mecab.
 from konlpy.tag import Kkma
 from collections import namedtuple
-# from konlpy.tag import Mecab
+from konlpy.tag import Mecab
 
 ChatData = namedtuple('ChatData',
                       ['time',
                        'user',
                        'raw',
-                       'contents'])
+                       'contents',
+                       'contents1'])
 
 
 class ChatParser(object):
     """docstring for ChatParser"""
-    def __init__(self, tagger=Kkma, thread_cnt=4):
-        self.tagger = tagger()
+    def __init__(self, tagger=Mecab, thread_cnt=4):
+        self.tagger1 = Kkma()
+        self.tagger2 = tagger()
         self.thread_cnt = thread_cnt
 
     def tagging(self, result, que, bar):
@@ -34,11 +36,15 @@ class ChatParser(object):
                 result[tok.pos] = ChatData(
                     time, tok.user,
                     tok.contents,
-                    self.tagger.pos(tok.contents, flatten=False))
+                    self.tagger1.pos(tok.contents),
+                    self.tagger2.pos(tok.contents))
+                print(result[tok.pos])
                 bar.update()
-            except AttributeError:
+            except AttributeError as e:
+                print(e)
                 pass
-            except IndexError:
+            except IndexError as e:
+                print(e)
                 # when competing threads try to pop()
                 break
         return
