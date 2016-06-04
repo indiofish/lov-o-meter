@@ -40,8 +40,15 @@ class Analyser(object):
 
     def __sentiment__(self, chat):
         ret = [0, 0]
+        cnt = 0  # cnt of msgs that show emotions
         for c in chat:
             p = self.senti.analyse(c.contents)
             ret[0] += p[0]
             ret[1] += p[1]
+            if p[0] != 0 or p[1] != 0:
+                cnt += 1
+        ret[0] /= cnt
+        ret[1] /= cnt
+        ret[0] *= 100
+        ret[1] *= 100
         return ret
