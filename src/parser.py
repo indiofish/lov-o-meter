@@ -11,7 +11,6 @@ from konlpy.tag import Mecab
 ChatData = namedtuple('ChatData',
                       ['time',
                        'user',
-                       'raw',
                        'contents'])
 
 
@@ -33,7 +32,6 @@ class ChatParser(object):
                                          "%Y-%m-%d %H:%M")
                 result[tok.pos] = ChatData(
                     time, tok.user,
-                    tok.contents,
                     self.tagger.pos(tok.contents))
                 bar.update()
             except AttributeError as e:

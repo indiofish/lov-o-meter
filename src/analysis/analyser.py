@@ -55,10 +55,10 @@ class Analyser(object):
             elif qa_analysis.reply(c.contents) == 1:
                 # the other speaker's question is answered
                 if questions[not(c.user)]:
-                    ans += questions[not(c.user)].pop(0)
+                    ans += questions[not(c.user)].pop()
             elif qa_analysis.reply(c.contents) == -1:
                 if questions[not(c.user)]:
-                    questions[not(c.user)].pop(0)
+                    questions[not(c.user)].pop()
         print(questions)
         return ans / total_q
 

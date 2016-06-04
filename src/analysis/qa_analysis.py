@@ -3,6 +3,9 @@ DATE_WORDS = "../data/date.json"
 OK_WORDS = "../data/ok.json"
 REFUSE_WORDS = "../data/refuse.json"
 QUESTIONS = ['EFQ', 'EFO', 'EFA']
+# nlp can't detect some of these jargons;
+# lets do it by hard coding it.
+DATA_QUESTIONS = ['하자', '먹자', '가자', '보자','할래','갈래','먹을래']
 
 with open(DATE_WORDS) as fp:
     date_words = json.load(fp)
@@ -18,7 +21,12 @@ def is_question(sentence):
     if '?' in tok or tag in QUESTIONS:
         return True
     else:
-        return False
+        q = ''.join((w[0] for w in sentence))
+        for w in DATA_QUESTIONS:
+            if w in q:
+                return True
+        else:
+            return False
 
 
 def reply(sentence):
@@ -37,5 +45,5 @@ def score(q):
     ret = 1
     for w in nouns:
         if w in DATE_WORDS:
-            ret += 1
+            ret += DATE_WORDS[w]
     return ret
