@@ -1,6 +1,4 @@
 import json
-POSITIVE_WORDS = "../data/positive.json"
-NEGATIVE_WORDS = "../data/negative.json"
 SENTI_WORDS = "../data/sentiment.json"
 BOOST_WORDS = "../data/boost.json"
 NEG_WORDS = "../data/neg.json"
@@ -82,6 +80,7 @@ class Sentiment(object):
 
     def __get_avg__(self, words):
         pos, neg = 0, 0
+        print(words)
         for p in words:
             if p[1] > 0:
                 pos += p[1]
