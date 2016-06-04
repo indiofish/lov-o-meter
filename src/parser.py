@@ -35,13 +35,10 @@ class ChatParser(object):
                     time, tok.user,
                     tok.contents,
                     self.tagger.pos(tok.contents))
-                print(result[tok.pos])
                 bar.update()
             except AttributeError as e:
-                print(e)
                 pass
             except IndexError as e:
-                print(e)
                 # when competing threads try to pop()
                 break
         return
