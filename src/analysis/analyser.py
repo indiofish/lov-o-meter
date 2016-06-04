@@ -59,8 +59,7 @@ class Analyser(object):
             elif qa_analysis.reply(c.contents) == -1:
                 if questions[not(c.user)]:
                     questions[not(c.user)].pop()
-        print(questions)
-        return ans / total_q
+        return 100 * (ans / total_q)
 
     def __sentiment__(self, chat):
         ret = [0, 0]

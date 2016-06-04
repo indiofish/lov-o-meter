@@ -1,1 +1,1 @@
-{"time":[5000, 10], "avg_chat":[50, 5], "senti_pos":[10, 3], "senti_neg":[2, 1], "qa_ratio":[30,5]}
+{"interval":[5000, 1000], "avg_chats":[50, 5], "senti_pos":[10, 3], "senti_neg":[2, 1], "qa_ratio":[30,5]}
