@@ -33,7 +33,7 @@ class ChatParser(object):
                 result[tok.pos] = ChatData(
                     time, tok.user,
                     self.tagger.pos(tok.contents))
-                bar.update()
+                # bar.update()
             except AttributeError as e:
                 pass
             except IndexError as e:
@@ -45,8 +45,8 @@ class ChatParser(object):
         """create threads to tag chatlog"""
         chat_que = lexer.lex(fp)
         ret = [None] * len(chat_que)
-        bar.full = len(chat_que)
-        bar.start()
+        # bar.full = len(chat_que)
+        # bar.start()
         pool = [Thread(target=self.tagging, args=(ret, chat_que, bar))
                 for _ in range(self.thread_cnt)]
         for t in pool:
@@ -54,6 +54,6 @@ class ChatParser(object):
             t.start()
         for t in pool:
             t.join()
-        bar.done = True
+        # bar.done = True
         # print(ret)
         return ret

@@ -5,26 +5,35 @@ from analysis import analyser
 from progress import ProgressBar
 
 
-def helper(filename, bar):
+def helper(filename, bar, f):
     """parse file, get data, and evaluate rank"""
     chat_parser = parser.ChatParser()
     tmp = analyser.Analyser()
     with open(filename, 'r', encoding='utf-8') as fp:
         chat = chat_parser.parse(fp, bar)
     chatdata = tmp.analyse(chat)
+    print(chatdata)
+    print(chatdata, file=f)
     ret = stats.get_stats(chatdata)
     return ret
 
 
 def main():
-    filename = "../tests/KakaoTalkChats.txt"
-    bar = ProgressBar()
-    try:
-        result = helper(filename, bar)
-    except IOError:
-        print("NO SUCH FILE")
-        return
-    print(result)
+    f = open("ret.txt", 'a')
+    for i in range(62, 64):
+        if i == 11:
+            continue
+        print(str(i) + "start")
+        print(str(i) + "start", file=f)
+        filename = "../tests/{}.txt".format(i+1)
+        bar = None
+        try:
+            result = helper(filename, bar, f)
+        except IOError:
+            print("NO SUCH FILE")
+            return
+        print(result, file=f)
+    f.close()
 
 if __name__ == '__main__':
     main()

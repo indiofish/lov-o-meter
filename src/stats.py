@@ -17,7 +17,6 @@ def normpdf(x, mean, sd):
 
 
 def get_stats(data):
-    print(data)
     interval = data.interval
     avg_chats = data.avg_chats
     pos, neg = data.sentiments

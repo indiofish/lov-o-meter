@@ -80,7 +80,6 @@ class Sentiment(object):
 
     def __get_avg__(self, words):
         pos, neg = 0, 0
-        print(words)
         for p in words:
             if p[1] > 0:
                 pos += p[1]

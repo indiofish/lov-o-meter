@@ -33,7 +33,7 @@ def __kakao_lexer__(f):
 
     for ln in f:
         match = re.search(regex, ln)
-        if match:
+        if match and match.group(8):
             dates = '-'.join(match.groups()[:3])
             hour = int(match.group(5))
             minute = match.group(6)
