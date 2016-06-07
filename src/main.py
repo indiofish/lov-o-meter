@@ -12,12 +12,13 @@ def helper(filename, bar):
     with open(filename, 'r', encoding='utf-8') as fp:
         chat = chat_parser.parse(fp, bar)
     chatdata = tmp.analyse(chat)
+    print(chatdata)
     ret = stats.get_stats(chatdata)
     return ret
 
 
 def main():
-    filename = "../tests/KakaoTalkChats1.txt"
+    filename = "../tests/KakaoTalkChats (3).txt"
     bar = ProgressBar()
     try:
         result = helper(filename, bar)
