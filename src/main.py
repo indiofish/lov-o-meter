@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import sys
 import parser
 import stats
 from analysis import analyser
@@ -18,7 +19,11 @@ def helper(filename, bar):
 
 
 def main():
-    filename = "../tests/KakaoTalkChats (3).txt"
+    if len(sys.argv) == 2:
+        filename = sys.argv[1]
+    else:
+        print("NEED FILENAME AS ARGUMENT")
+        return
     bar = ProgressBar()
     try:
         result = helper(filename, bar)
